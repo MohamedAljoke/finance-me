@@ -1,11 +1,15 @@
+import { validatedEnv } from '@/validation/env.validator';
 import jwt from 'jsonwebtoken';
+
+const EXPIRES_IN = '7d';
 
 export function generateToken(
   payload: any,
-  secret: string,
-  expiresIn: string
+  expiresIn: string = EXPIRES_IN
 ): string {
-  return jwt.sign(payload, secret, { expiresIn });
+  return jwt.sign(payload, validatedEnv.JWT_ACCESS_TOKEN_HASH_KEY, {
+    expiresIn: expiresIn,
+  });
 }
 
 export function verifyToken(token: string, secret: string): any {

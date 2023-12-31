@@ -1,10 +1,11 @@
 import { verifyToken } from '@/utils/jwt.utils';
 import { validatedEnv } from '@/validation/env.validator';
 import { Request, Response, NextFunction } from 'express';
+import { User } from '@prisma/client';
 
 export interface ResponseWithUser extends Response {
   locals: {
-    user: any;
+    user: User;
   };
 }
 export const deserializeUser = async (
@@ -12,7 +13,11 @@ export const deserializeUser = async (
   res: ResponseWithUser,
   next: NextFunction
 ) => {
-  const accessToken = req.cookies?.jwt;
+  const accessToken =
+    req.cookies?.access_token ||
+    req.headers?.authorization?.replace('Bearer ', '');
+  const refreshToken = req.cookies?.refresh_token || req.headers['x-refresh'];
+
   if (!accessToken) {
     return next();
   }
@@ -25,5 +30,7 @@ export const deserializeUser = async (
     return next();
   }
   // TODO: deal with refresh token
+  if (expired && refreshToken) {
+  }
   next();
 };

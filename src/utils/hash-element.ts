@@ -7,3 +7,10 @@ export const hashElement = async (
   const salt = await bcrypt.genSalt(saltWorkFactor);
   return bcrypt.hash(element, salt);
 };
+
+export const compareHashedElements = async (
+  elementOne: string,
+  elementTwo: string
+) => {
+  return await bcrypt.compare(elementOne, elementTwo).catch((e) => false);
+};
