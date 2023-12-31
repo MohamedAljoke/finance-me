@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String
+  name     String?
+
+  Accounts         Account[]
+  Spendings        Spendings[]
+  Income           Income[]
+  IncomeCategory   IncomeCategory[]
+  SpendingCategory SpendingCategory[]
+  Currency         Currency[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id            String      @id @default(uuid())
+  name          String
+  description   String?
+  accountNumber String?
+  accountName   String?
+  bankCode      String?
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  Spendings     Spendings[]
+  Income        Income[]
+
+  SenderAccount   Transaction[] @relation(name: "SenderAccount")
+  ReceiverAccount Transaction[] @relation(name: "ReceiverAccount")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("accounts")
+}
+
+model Currency {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  symbol      String?
+  Spendings   Spendings[]
+  Income      Income[]
+
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("currencies")
+}
+
+model SpendingCategory {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  symbol      String?
+  Spendings   Spendings[]
+
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("spending_category")
+}
+
+model IncomeCategory {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  symbol      String?
+  Income      Income[]
+  userId      String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("income_category")
+}
+
+model Spendings {
+  id           String           @id @default(uuid())
+  name         String
+  description  String?
+  symbol       String?
+  amount       Float
+  date         DateTime
+  userId       String
+  isScheduled  Boolean          @default(false)
+  scheduleDate DateTime?
+  user         User             @relation(fields: [userId], references: [id])
+  categoryId   String
+  category     SpendingCategory @relation(fields: [categoryId], references: [id])
+  accountId    String
+  account      Account          @relation(fields: [accountId], references: [id])
+  currencyId   String
+  currency     Currency         @relation(fields: [currencyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("spendings")
+}
+
+model Income {
+  id           String         @id @default(uuid())
+  name         String
+  description  String?
+  symbol       String?
+  amount       Float
+  date         DateTime
+  userId       String
+  isScheduled  Boolean        @default(false)
+  scheduleDate DateTime?
+  user         User           @relation(fields: [userId], references: [id])
+  categoryId   String
+  category     IncomeCategory @relation(fields: [categoryId], references: [id])
+  accountId    String
+  account      Account        @relation(fields: [accountId], references: [id])
+  currencyId   String
+  currency     Currency       @relation(fields: [currencyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("income")
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  amount      Float
+  date        DateTime
+
+  sender            Account @relation("SenderAccount", fields: [senderAccountId], references: [id])
+  senderAccountId   String
+  receiver          Account @relation("ReceiverAccount", fields: [receiverAccountId], references: [id])
+  receiverAccountId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
