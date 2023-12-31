@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
     "module":"CommonJS",
     "target": "es2019",
@@ -7,8 +9,21 @@
     "allowJs": true,
     "strictNullChecks": true,
     "noPropertyAccessFromIndexSignature": true,
-    "sourceMap": true                            
+    "sourceMap": true,                        
+    "paths": {
+      "@/*": ["./src/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@models/*": ["./src/models/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@validation/*": ["./src/validation/*"],
+      "@schemas/*": ["./src/schemas/*"],
+      "@errors/*": ["./src/errors/*"],
+      "connection/*": ["./src/connection/*"]
+    }
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "dist"]
 }

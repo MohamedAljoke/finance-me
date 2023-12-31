@@ -1,10 +1,11 @@
-import { Response, Request, Router } from 'express';
-import { deserializeUser } from '../middlewares/deserialize-user';
+import { registerUser } from '@/controller/users.controller';
+import validate from '@/middlewares/validate-resources';
+import { registerUserSchema } from '@/validation/users.validator';
+import { Router } from 'express';
 
 const users = Router();
 
-users.use(deserializeUser);
-users.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Hello from users' }).status(200);
-});
+//public
+users.post('/register', validate(registerUserSchema), registerUser);
+
 export default users;

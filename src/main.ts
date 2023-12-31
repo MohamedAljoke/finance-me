@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import api from './routes/index';
-import { validatedEnv } from './validation/env.validator';
+import api from './routes';
+import { validatedEnv } from '@validation/env.validator';
 
 const app = express();
 

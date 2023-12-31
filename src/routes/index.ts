@@ -1,12 +1,14 @@
 import { Response, Request, Router } from 'express';
 import users from './users';
-import requireUser from '../middlewares/require-user';
+import auth from './auth';
 
 const api = Router();
 
-api.get('/healthcheck', (req: Request, res: Response) => {
-  res.sendStatus(200);
+api.get('/version', (req: Request, res: Response) => {
+  res.json({ version: '1.0.0' });
 });
-api.use('/users', requireUser, users);
+
+api.use('/users', users);
+api.use('/auth', auth);
 
 export default api;

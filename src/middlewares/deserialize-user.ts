@@ -1,6 +1,6 @@
+import { verifyToken } from '@/utils/jwt.utils';
+import { validatedEnv } from '@/validation/env.validator';
 import { Request, Response, NextFunction } from 'express';
-import { JwtUtils } from '../utils/jwt.utils';
-import { validatedEnv } from '../validation/env.validator';
 
 export interface ResponseWithUser extends Response {
   locals: {
@@ -16,7 +16,7 @@ export const deserializeUser = async (
   if (!accessToken) {
     return next();
   }
-  const { decoded, expired } = JwtUtils.verifyToken(
+  const { decoded, expired } = verifyToken(
     accessToken,
     validatedEnv.JWT_ACCESS_TOKEN_HASH_KEY
   );
