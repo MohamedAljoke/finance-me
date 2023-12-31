@@ -1,12 +1,37 @@
 version: '3.8'
 
 services:
-  mysql-db:
+  api:
+    container_name: finance_me_api
+    hostname: finance_me_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+      MYSQL_HOST: host.docker.internal
+    # command: sh -c "node ace migration:run"
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    depends_on:
+      - finance_me_db
+    networks:
+      - backend_network
+
+  finance_me_db:
     image: mysql:latest
-    container_name: mysql-container
+    container_name: finance_me_db
     restart: always
     ports:
       - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: finance_me
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge

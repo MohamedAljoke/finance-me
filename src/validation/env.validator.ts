@@ -6,6 +6,8 @@ enum EEnvironment {
 }
 const EnvSchema = z.object({
   PORT: z.string(),
+  DATABASE_URL: z.string(),
+  JWT_ACCESS_TOKEN_HASH_KEY: z.string(),
   NODE_ENV: z.nativeEnum(EEnvironment),
 });
 

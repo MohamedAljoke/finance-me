@@ -1,0 +1,9 @@
+dist
+.git
+.vscode
+node_modules
+jest.config.ts
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
