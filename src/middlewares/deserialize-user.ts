@@ -3,14 +3,9 @@ import { validatedEnv } from '@/validation/env.validator';
 import { Request, Response, NextFunction } from 'express';
 import { User } from '@prisma/client';
 
-export interface ResponseWithUser extends Response {
-  locals: {
-    user: User;
-  };
-}
 export const deserializeUser = async (
   req: Request,
-  res: ResponseWithUser,
+  res: Response,
   next: NextFunction
 ) => {
   const accessToken =

@@ -18,10 +18,10 @@ model User {
 
   Accounts         Account[]
   Spendings        Spendings[]
-  Income           Income[]
-  IncomeCategory   IncomeCategory[]
-  SpendingCategory SpendingCategory[]
-  Currency         Currency[]
+  income           Income[]
+  incomeCategory   IncomeCategory[]
+  spendingCategory SpendingCategory[]
+  currency         Currency[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -38,11 +38,11 @@ model Account {
   bankCode      String?
   userId        String
   user          User        @relation(fields: [userId], references: [id])
-  Spendings     Spendings[]
-  Income        Income[]
+  spendings     Spendings[]
+  income        Income[]
 
-  SenderAccount   Transaction[] @relation(name: "SenderAccount")
-  ReceiverAccount Transaction[] @relation(name: "ReceiverAccount")
+  senderAccount   Transaction[] @relation(name: "SenderAccount")
+  receiverAccount Transaction[] @relation(name: "ReceiverAccount")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,7 +90,7 @@ model IncomeCategory {
   name        String
   description String?
   symbol      String?
-  Income      Income[]
+  income      Income[]
   userId      String
 
   user User @relation(fields: [userId], references: [id])

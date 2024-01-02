@@ -8,8 +8,8 @@
     "esModuleInterop": true,
     "allowJs": true,
     "strictNullChecks": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "sourceMap": true,                        
+    "sourceMap": true,   
+    "skipLibCheck": true,                     
     "paths": {
       "@/*": ["./src/*"],
       "@routes/*": ["./src/routes/*"],
