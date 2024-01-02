@@ -1,4 +1,5 @@
 import prisma from '@/connections/database/prisma.datasource';
+import { Prisma } from '@prisma/client';
 import { ApiUnauthorizedError, NotFoundError } from '@/errors/apiDefaultError';
 import {
   RegisterAccountBody,
@@ -51,6 +52,12 @@ export async function getUserAccountByIdService(
     where: {
       userId: userId,
       id: accountId,
+    },
+    include: {
+      spendings: true,
+      income: true,
+      senderAccount: true,
+      receiverAccount: true,
     },
   });
   return account;
