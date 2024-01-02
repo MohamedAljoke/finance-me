@@ -1,6 +1,5 @@
 import prisma from '@/connections/database/prisma.datasource';
-import { ApiDefaultError } from '@/errors/apiDefaultError';
-import { UserExistsError } from '@/errors/users.error';
+import { ApiDefaultError, DataConflictError } from '@/errors/apiDefaultError';
 import { hashElement } from '@/utils/hash-element';
 import { RegisterUserBody } from '@/validation/users.validator';
 
@@ -19,7 +18,7 @@ export async function createUser(
     return newUser;
   } catch (error) {
     if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
-      throw new UserExistsError();
+      throw new DataConflictError('User already exists');
     }
     throw new ApiDefaultError();
   }

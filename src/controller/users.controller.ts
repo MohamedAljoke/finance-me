@@ -2,7 +2,6 @@ import { StatusCodes } from 'http-status-codes';
 import { Response, Request, NextFunction } from 'express';
 import { RegisterUserBody } from '@/validation/users.validator';
 import { createUser } from '@/service/user.service';
-import { ApiDefaultError } from '@/errors/apiDefaultError';
 
 export async function registerUser(
   req: Request<{}, {}, RegisterUserBody['body']>,

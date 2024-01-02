@@ -4,8 +4,7 @@ import { compareHashedElements } from '@/utils/hash-element';
 import { generateToken } from '@/utils/jwt.utils';
 import { LoginBody } from '@/validation/login.validator';
 import { Response, Request, NextFunction } from 'express';
-import { UserNotFoundError } from '@/errors/users.error';
-import { ApiUnauthorizedError } from '@/errors/apiDefaultError';
+import { ApiUnauthorizedError, NotFoundError } from '@/errors/apiDefaultError';
 
 export async function loginUser(
   req: Request<{}, {}, LoginBody['body']>,
@@ -17,7 +16,7 @@ export async function loginUser(
   try {
     const user = await findUserByEmail(email);
     if (!user) {
-      throw new UserNotFoundError();
+      throw new NotFoundError('User not found');
     }
     const isPasswordValid = await compareHashedElements(
       password,
