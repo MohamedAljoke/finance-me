@@ -10,18 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  name     String?
+enum EUserRoles {
+  ADMIN
+  USER
+}
 
-  Accounts         Account[]
-  Spendings        Spendings[]
-  income           Income[]
+model User {
+  id               String             @id @default(uuid())
+  email            String             @unique
+  password         String
+  name             String?
+  role             EUserRoles         @default(USER)
+  accounts         Account[]
+  spendings        Spendings[]
+  incomes          Incomes[]
   incomeCategory   IncomeCategory[]
   spendingCategory SpendingCategory[]
-  currency         Currency[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,7 +43,7 @@ model Account {
   userId        String
   user          User        @relation(fields: [userId], references: [id])
   spendings     Spendings[]
-  income        Income[]
+  incomes       Incomes[]
 
   senderAccount   Transaction[] @relation(name: "SenderAccount")
   receiverAccount Transaction[] @relation(name: "ReceiverAccount")
@@ -55,12 +59,8 @@ model Currency {
   name        String
   description String?
   symbol      String?
-  Spendings   Spendings[]
-  Income      Income[]
-
-  userId String
-
-  user User @relation(fields: [userId], references: [id])
+  spendings   Spendings[]
+  incomes     Incomes[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,7 +73,7 @@ model SpendingCategory {
   name        String
   description String?
   symbol      String?
-  Spendings   Spendings[]
+  spendings   Spendings[]
 
   userId String
 
@@ -86,12 +86,13 @@ model SpendingCategory {
 }
 
 model IncomeCategory {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String?
   symbol      String?
-  income      Income[]
-  userId      String
+  incomes     Incomes[]
+
+  userId String
 
   user User @relation(fields: [userId], references: [id])
 
@@ -125,7 +126,7 @@ model Spendings {
   @@map("spendings")
 }
 
-model Income {
+model Incomes {
   id           String         @id @default(uuid())
   name         String
   description  String?

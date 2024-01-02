@@ -14,7 +14,7 @@ export async function loginUser(
   const { email, password } = req.body;
 
   try {
-    const user = await findUserByEmail(email);
+    const user = await findUserByEmail({ email });
     if (!user) {
       throw new NotFoundError('User not found');
     }

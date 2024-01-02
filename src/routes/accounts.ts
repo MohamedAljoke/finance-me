@@ -13,35 +13,40 @@ import {
   updateAccountSchema,
 } from '@/validation/accounts.validator';
 import { Router } from 'express';
-
+import { Prisma, EUserRoles } from '@prisma/client';
 const accounts = Router();
 
-//public
+//user
 accounts.post(
   '/',
   deserializeUser,
-  requireUser,
+  requireUser([EUserRoles.USER]),
   validate(registerAccountSchema),
   createAccountController
 );
-accounts.get('/', deserializeUser, requireUser, getUserAccountsController);
+accounts.get(
+  '/',
+  deserializeUser,
+  requireUser([EUserRoles.USER]),
+  getUserAccountsController
+);
 accounts.get(
   '/:accountId',
   deserializeUser,
-  requireUser,
+  requireUser([EUserRoles.USER]),
   getAccountByIdForUserController
 );
 accounts.put(
   '/:accountId',
   deserializeUser,
-  requireUser,
+  requireUser([EUserRoles.USER]),
   validate(updateAccountSchema),
   updateAccountController
 );
 accounts.delete(
   '/:accountId',
   deserializeUser,
-  requireUser,
+  requireUser([EUserRoles.USER]),
   deleteAccountController
 );
 

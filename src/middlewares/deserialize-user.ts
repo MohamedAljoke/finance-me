@@ -11,6 +11,7 @@ export const deserializeUser = async (
   const accessToken =
     req.cookies?.access_token ||
     req.headers?.authorization?.replace('Bearer ', '');
+  console.log('accessToken', accessToken);
   const refreshToken = req.cookies?.refresh_token || req.headers['x-refresh'];
 
   if (!accessToken) {
