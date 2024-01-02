@@ -24,7 +24,11 @@ export async function getLoggedUserData(
   res: Response,
   next: NextFunction
 ) {
+  const user = res.locals.user;
   try {
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: 'User data fetched correctly', data: user });
   } catch (error) {
     next(error);
   }
