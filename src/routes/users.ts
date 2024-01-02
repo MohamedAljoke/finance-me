@@ -9,6 +9,8 @@ const users = Router();
 
 //public
 users.post('/register', validate(registerUserSchema), registerUser);
+
+//private
 users.get('/me', deserializeUser, requireUser, getLoggedUserData);
 
 export default users;
