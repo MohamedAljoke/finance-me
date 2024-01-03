@@ -37,7 +37,7 @@ export async function getAccountById(accountId: string) {
     where: {
       id: accountId,
     },
-    select: {
+    include: {
       user: true,
     },
   });

@@ -1,8 +1,8 @@
 import { Response, Request, Router } from 'express';
-import users from './users';
-import auth from './auth';
-import accounts from './accounts';
-import currency from './currency';
+import users from './users.routes';
+import auth from './auth.routes';
+import accounts from './accounts.routes';
+import currency from './currency.routes';
 
 const api = Router();
 

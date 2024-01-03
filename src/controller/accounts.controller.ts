@@ -56,6 +56,9 @@ export async function getAccountByIdForUserController(
     const userId = res.locals.user.id;
     const accountId = req.params.accountId;
     const userAccount = await getUserAccountByIdService(userId, accountId);
+    if (!userAccount) {
+      throw new NotFoundError('Account not found');
+    }
     return res
       .status(StatusCodes.OK)
       .json({ message: 'Account fetched correctly', data: userAccount });
