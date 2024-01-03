@@ -67,7 +67,7 @@ export const createSpendingCategory = async (
       category,
     });
     return res.status(StatusCodes.CREATED).json({
-      message: 'Account created successfully',
+      message: 'spending category created successfully',
       data: savedSpendingCategory,
     });
   } catch (error) {

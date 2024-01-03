@@ -67,7 +67,7 @@ export const createIncomeCategory = async (
       category,
     });
     return res.status(StatusCodes.CREATED).json({
-      message: 'Account created successfully',
+      message: 'income category created successfully',
       data: savedSpendingCategory,
     });
   } catch (error) {
