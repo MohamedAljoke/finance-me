@@ -8,34 +8,21 @@ import {
 import { deserializeUser } from '@/middlewares/deserialize-user';
 import requireUser from '@/middlewares/require-user';
 import { EUserRoles } from '@prisma/client';
-import {
-  createSpendingCategory,
-  getAllSpendingCategoriesController,
-  getSpendingCategoryByIdController,
-} from '@/controller/spending-category.controller';
-import { registerSpendingCategorySchema } from '@/validation/spending-category.validator';
 
 const currency = Router();
 
-currency.get(
-  '/',
-  deserializeUser,
-  requireUser([EUserRoles.USER]),
-  getAllSpendingCategoriesController
-);
-
-currency.get(
-  '/:categoryId',
-  deserializeUser,
-  requireUser([EUserRoles.USER]),
-  getSpendingCategoryByIdController
-);
-
 currency.post(
+  '/admin-create',
+  deserializeUser,
+  requireUser([EUserRoles.ADMIN]),
+  validate(registerCurrencySchema),
+  adminCreateCurrency
+);
+
+currency.get(
   '/',
   deserializeUser,
   requireUser([EUserRoles.USER]),
-  validate(registerSpendingCategorySchema),
-  createSpendingCategory
+  fetchCurrencyListController
 );
 export default currency;
