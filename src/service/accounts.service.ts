@@ -1,10 +1,9 @@
-import prisma from '@/connections/database/prisma.datasource';
-import { Prisma } from '@prisma/client';
-import { ApiUnauthorizedError, NotFoundError } from '@/errors/apiDefaultError';
+import prisma from '../connections/database/prisma';
+import { ApiUnauthorizedError, NotFoundError } from '@errors/apiDefaultError';
 import {
   RegisterAccountBody,
   UpdateAccountBody,
-} from '@/validation/accounts.validator';
+} from '@validation/accounts.validator';
 
 export async function createAccountService(
   account: RegisterAccountBody['body'],

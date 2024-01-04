@@ -1,13 +1,12 @@
-import prismaInstance from '@/connections/database/prisma.datasource';
+import prisma from '@/connections/database/prisma';
 import { RegisterIncomeCategoryBody } from '@/validation/income-category.validator';
-import { RegisterSpendingCategoryBody } from '@/validation/spending-category.validator';
 
 export async function fetchUserIncomeCategoriesService({
   userId,
 }: {
   userId: string;
 }) {
-  const categories = await prismaInstance.spendingCategory.findMany({
+  const categories = await prisma.spendingCategory.findMany({
     where: {
       userId: userId,
     },
@@ -18,7 +17,7 @@ export async function getIncomeCategoryByIdAndUserIdService(
   accountId: string,
   userId: string
 ) {
-  const account = await prismaInstance.spendingCategory.findFirst({
+  const account = await prisma.spendingCategory.findFirst({
     where: {
       id: accountId,
       userId: userId,
@@ -36,7 +35,7 @@ export async function createIncomeCategoryService({
   userId: string;
   category: RegisterIncomeCategoryBody['body'];
 }) {
-  const createdCategory = await prismaInstance.spendingCategory.create({
+  const createdCategory = await prisma.spendingCategory.create({
     data: {
       name: category.name,
       userId,

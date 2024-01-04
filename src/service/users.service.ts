@@ -1,15 +1,15 @@
-import prismaInstance from '@/connections/database/prisma.datasource';
-import { ApiDefaultError, DataConflictError } from '@/errors/apiDefaultError';
-import { hashElement } from '@/utils/hash-element';
-import { RegisterUserBody } from '@/validation/users.validator';
+import prisma from '@connections/database/prisma';
+import { ApiDefaultError, DataConflictError } from '@errors/apiDefaultError';
+import { hashElement } from '@utils/hash-element';
+import { RegisterUserBody } from '@validation/users.validator';
 import { Prisma } from '@prisma/client';
 
 export async function createUser(
-  user: Omit<RegisterUserBody['body'], 'comparePassword'>
+  user: Omit<RegisterUserBody['body'], 'confirmPassword'>
 ) {
   const hashedPassword = await hashElement(user.password);
   try {
-    const newUser = await prismaInstance.user.create({
+    const newUser = await prisma.user.create({
       data: {
         name: user.name,
         email: user.email,
@@ -32,7 +32,7 @@ export async function findUserByEmail({
   email: string;
   include?: Prisma.UserInclude;
 }) {
-  const user = await prismaInstance.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email,
     },

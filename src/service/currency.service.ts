@@ -1,4 +1,4 @@
-import prisma from '@/connections/database/prisma.datasource';
+import prisma from '../connections/database/prisma';
 import { RegisterCurrencyBody } from '@/validation/currency.validator';
 
 export async function adminCreateCurrencyService(

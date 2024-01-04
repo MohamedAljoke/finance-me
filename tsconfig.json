@@ -16,12 +16,12 @@
       "@controllers/*": ["./src/controllers/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@models/*": ["./src/models/*"],
-      "@services/*": ["./src/services/*"],
+      "@services/*": ["./src/service/*"],
       "@utils/*": ["./src/utils/*"],
       "@validation/*": ["./src/validation/*"],
       "@schemas/*": ["./src/schemas/*"],
       "@errors/*": ["./src/errors/*"],
-      "connection/*": ["./src/connection/*"]
+      "@connections/*": ["./src/connections/*"]
     }
   },
   "include": ["./src/**/*"],
