@@ -4,7 +4,7 @@ import prismaMock from '@connections/database/__mocks__/prisma.mock';
 import { createUser } from '@services/users.service';
 import { userFactory } from '../__factory__/user.factory';
 
-vi.mock('../../connections/database/prisma');
+vi.mock('@connections/database/prisma');
 
 describe('UsersService', () => {
   describe('createUser', () => {
@@ -19,9 +19,9 @@ describe('UsersService', () => {
     });
 
     it('should return created account account on success', async () => {
-      // const user = userFactory({ ...createParams });a
-      // prismaMock.user.create.mockResolvedValue(user);
-      // const createdAccount = await createUser(createParams);
+      const user = userFactory({ ...createParams });
+      prismaMock.user.create.mockResolvedValue(user);
+      const createdAccount = await createUser(createParams);
       expect(1).toBe(1);
     });
   });
