@@ -1,7 +1,7 @@
 import {
   adminCreateCurrencyService,
   fetchCurrenciesList,
-} from '@/service/currency.service';
+} from '@/services/currency.service';
 import { RegisterCurrencyBody } from '@/validation/currency.validator';
 import { Response, Request, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';

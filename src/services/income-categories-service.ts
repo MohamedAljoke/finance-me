@@ -1,7 +1,7 @@
-import prisma from '@/connections/database/prisma';
-import { RegisterSpendingCategoryBody } from '@/validation/spending-category.validator';
+import prisma from '@/libs/prisma';
+import { RegisterIncomeCategoryBody } from '@/validation/income-category.validator';
 
-export async function fetchUserSpendingCategoriesService({
+export async function fetchUserIncomeCategoriesService({
   userId,
 }: {
   userId: string;
@@ -13,7 +13,7 @@ export async function fetchUserSpendingCategoriesService({
   });
   return categories;
 }
-export async function getSpendingCategoryByIdAndUserIdService(
+export async function getIncomeCategoryByIdAndUserIdService(
   accountId: string,
   userId: string
 ) {
@@ -28,12 +28,12 @@ export async function getSpendingCategoryByIdAndUserIdService(
   });
   return account;
 }
-export async function createSpendingCategoryService({
+export async function createIncomeCategoryService({
   userId,
   category,
 }: {
   userId: string;
-  category: RegisterSpendingCategoryBody['body'];
+  category: RegisterIncomeCategoryBody['body'];
 }) {
   const createdCategory = await prisma.spendingCategory.create({
     data: {

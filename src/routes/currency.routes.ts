@@ -4,7 +4,7 @@ import { registerCurrencySchema } from '@/validation/currency.validator';
 import {
   adminCreateCurrency,
   fetchCurrencyListController,
-} from '@/controller/currency.controller';
+} from '@/controllers/currency.controller';
 import { deserializeUser } from '@/middlewares/deserialize-user';
 import requireUser from '@/middlewares/require-user';
 import { EUserRoles } from '@prisma/client';

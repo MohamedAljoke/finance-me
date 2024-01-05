@@ -1,35 +1,35 @@
 import { NotFoundError } from '@/errors/apiDefaultError';
 import {
-  createIncomeCategoryService,
-  fetchUserIncomeCategoriesService,
-  getIncomeCategoryByIdAndUserIdService,
-} from '@/service/income-categories-service';
-import { RegisterIncomeCategoryBody } from '@/validation/income-category.validator';
-
+  createSpendingCategoryService,
+  fetchUserSpendingCategoriesService,
+  getSpendingCategoryByIdAndUserIdService,
+} from '@/services/spending-categories.service';
+import { RegisterSpendingCategoryBody } from '@/validation/spending-category.validator';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-export const fetchAllIncomeCategoriesController = async (
+// Get all spending categories
+export const getAllSpendingCategoriesController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const userId = res.locals.user.id;
-    const incomeCategories = await fetchUserIncomeCategoriesService({
+    const spendingCategories = await fetchUserSpendingCategoriesService({
       userId,
     });
     return res.status(StatusCodes.OK).json({
-      message: 'income categories fetched successfully',
-      data: incomeCategories,
+      message: 'spending categories fetched successfully',
+      data: spendingCategories,
     });
   } catch (error) {
     return next();
   }
 };
 
-// Get a single income category by ID
-export const getIncomeCategoryByIdController = async (
+// Get a single spending category by ID
+export const getSpendingCategoryByIdController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -37,15 +37,15 @@ export const getIncomeCategoryByIdController = async (
   const categoryId = req.params.categoryId;
   const userId = res.locals.user.id;
   try {
-    const spendingCategory = await getIncomeCategoryByIdAndUserIdService(
+    const spendingCategory = await getSpendingCategoryByIdAndUserIdService(
       categoryId,
       userId
     );
     if (!spendingCategory) {
-      throw new NotFoundError('income category not found');
+      throw new NotFoundError('Spending category not found');
     }
     return res.status(StatusCodes.OK).json({
-      message: 'got income category successfully',
+      message: 'got spending category successfully',
       data: spendingCategory,
     });
   } catch (error) {
@@ -53,21 +53,21 @@ export const getIncomeCategoryByIdController = async (
   }
 };
 
-// Create a new income category
-export const createIncomeCategory = async (
-  req: Request<{}, {}, RegisterIncomeCategoryBody['body']>,
+// Create a new spending category
+export const createSpendingCategory = async (
+  req: Request<{}, {}, RegisterSpendingCategoryBody['body']>,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const category = req.body;
     const userId = res.locals.user.id;
-    const savedSpendingCategory = await createIncomeCategoryService({
+    const savedSpendingCategory = await createSpendingCategoryService({
       userId,
       category,
     });
     return res.status(StatusCodes.CREATED).json({
-      message: 'income category created successfully',
+      message: 'spending category created successfully',
       data: savedSpendingCategory,
     });
   } catch (error) {

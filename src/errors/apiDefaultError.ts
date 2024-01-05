@@ -1,9 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 
+export const serverErrorMessage = 'Internal server error';
 export class ApiDefaultError extends Error {
   statusCode: number;
   constructor() {
-    super('Internal server error');
+    super(serverErrorMessage);
     this.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
   }
 }

@@ -1,4 +1,7 @@
-import { getLoggedUserData, registerUser } from '@/controller/users.controller';
+import {
+  getLoggedUserData,
+  registerUser,
+} from '@/controllers/users.controller';
 import { deserializeUser } from '@/middlewares/deserialize-user';
 import requireUser from '@/middlewares/require-user';
 import validate from '@/middlewares/validate-resources';

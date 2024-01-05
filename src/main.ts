@@ -5,9 +5,9 @@ dotenv.config();
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-import api from './routes';
 import { validatedEnv } from '@validation/env.validator';
 import { globalErrorHandler } from '@middlewares/global-error-handler';
+import api from './routes';
 
 const app = express();
 

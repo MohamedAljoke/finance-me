@@ -4,7 +4,7 @@ import {
   getAccountByIdForUserController,
   getUserAccountsController,
   updateAccountController,
-} from '@/controller/accounts.controller';
+} from '@/controllers/accounts.controller';
 import { deserializeUser } from '@/middlewares/deserialize-user';
 import requireUser from '@/middlewares/require-user';
 import validate from '@/middlewares/validate-resources';

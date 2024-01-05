@@ -1,13 +1,12 @@
-import { ApiUnauthorizedError, NotFoundError } from '@/errors/apiDefaultError';
+import { NotFoundError } from '@/errors/apiDefaultError';
 import {
   createAccountService,
   deleteAccountService,
-  getAccountById,
   getAccountVerifyItExistsAndBelongsToUser,
   getUserAccountByIdService,
   getUserAccountsService,
   updateUserAccountService,
-} from '@/service/accounts.service';
+} from '@/services/accounts.service';
 import {
   RegisterAccountBody,
   UpdateAccountBody,

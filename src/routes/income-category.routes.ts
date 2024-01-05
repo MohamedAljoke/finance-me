@@ -7,13 +7,13 @@ import {
   createSpendingCategory,
   getAllSpendingCategoriesController,
   getSpendingCategoryByIdController,
-} from '@/controller/spending-category.controller';
+} from '@/controllers/spending-category.controller';
 import { registerSpendingCategorySchema } from '@/validation/spending-category.validator';
 import {
   createIncomeCategory,
   fetchAllIncomeCategoriesController,
   getIncomeCategoryByIdController,
-} from '@/controller/income-category.controller';
+} from '@/controllers/income-category.controller';
 import { registerIncomeCategorySchema } from '@/validation/income-category.validator';
 
 const incomeCategories = Router();

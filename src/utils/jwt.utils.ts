@@ -1,4 +1,4 @@
-import { validatedEnv } from '@/validation/env.validator';
+import { validatedEnv } from '@validation/env.validator';
 import jwt from 'jsonwebtoken';
 
 const EXPIRES_IN = '7d';

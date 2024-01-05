@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { loginUser } from '@/controller/auth.controller';
+import { loginUser } from '@/controllers/auth.controller';
 import validate from '@/middlewares/validate-resources';
 import { loginUserSchema } from '@/validation/login.validator';
 

@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { findUserByEmail } from '@/service/users.service';
+import { findUserByEmail } from '@/services/users.service';
 import { compareHashedElements } from '@/utils/hash-element';
 import { generateToken } from '@/utils/jwt.utils';
 import { LoginBody } from '@/validation/login.validator';

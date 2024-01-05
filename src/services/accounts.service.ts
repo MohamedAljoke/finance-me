@@ -1,4 +1,4 @@
-import prisma from '../connections/database/prisma';
+import prisma from '@/libs/prisma';
 import { ApiUnauthorizedError, NotFoundError } from '@errors/apiDefaultError';
 import {
   RegisterAccountBody,
@@ -35,9 +35,6 @@ export async function getAccountById(accountId: string) {
   const account = await prisma.account.findFirst({
     where: {
       id: accountId,
-    },
-    include: {
-      user: true,
     },
   });
   return account;
@@ -101,7 +98,7 @@ export async function getAccountVerifyItExistsAndBelongsToUser({
   if (!account) {
     throw new NotFoundError('Account not found');
   }
-  if (account?.user.id !== userId) {
+  if (account?.userId !== userId) {
     throw new ApiUnauthorizedError('Account does not belong to user');
   }
   return account;

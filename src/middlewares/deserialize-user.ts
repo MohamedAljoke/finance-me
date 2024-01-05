@@ -1,7 +1,6 @@
-import { verifyToken } from '@/utils/jwt.utils';
-import { validatedEnv } from '@/validation/env.validator';
+import { verifyToken } from '@utils/jwt.utils';
+import { validatedEnv } from '@validation/env.validator';
 import { Request, Response, NextFunction } from 'express';
-import { User } from '@prisma/client';
 
 export const deserializeUser = async (
   req: Request,
@@ -11,7 +10,6 @@ export const deserializeUser = async (
   const accessToken =
     req.cookies?.access_token ||
     req.headers?.authorization?.replace('Bearer ', '');
-  console.log('accessToken', accessToken);
   const refreshToken = req.cookies?.refresh_token || req.headers['x-refresh'];
 
   if (!accessToken) {

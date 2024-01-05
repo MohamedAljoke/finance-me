@@ -14,7 +14,7 @@ function requireUser(permittedRoles: string[]) {
       }
       return next();
     } catch (error) {
-      console.log('ahahah');
+      console.log(error);
       return next(error);
     }
   };

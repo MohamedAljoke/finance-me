@@ -3,6 +3,7 @@ import z from 'zod';
 enum EEnvironment {
   development = 'development',
   production = 'production',
+  test = 'test',
 }
 const EnvSchema = z.object({
   PORT: z.string(),

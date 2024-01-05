@@ -1,8 +1,8 @@
-import prisma from '@connections/database/prisma';
-import { ApiDefaultError, DataConflictError } from '@errors/apiDefaultError';
-import { hashElement } from '@utils/hash-element';
-import { RegisterUserBody } from '@validation/users.validator';
+import { RegisterUserBody } from '@/validation/users.validator';
+import { ApiDefaultError, DataConflictError } from '../errors/apiDefaultError';
+import prisma from '../libs/prisma';
 import { Prisma } from '@prisma/client';
+import { hashElement } from '@/utils/hash-element';
 
 export async function createUser(
   user: Omit<RegisterUserBody['body'], 'confirmPassword'>
