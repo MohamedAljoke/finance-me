@@ -1,4 +1,4 @@
-import z, { object, string, TypeOf, number, date } from 'zod';
+import z, { object, string, TypeOf, number, date, boolean } from 'zod';
 
 export const ETransactionType = z.enum(['SPENDING', 'INCOME']);
 export const registerTransactionSchema = object({
@@ -11,6 +11,8 @@ export const registerTransactionSchema = object({
     date: string(),
     description: string().optional(),
     symbol: string().optional(),
+    isScheduled: boolean().optional(),
+    scheduleDate: string().optional(),
     spendingNecessiteGrade: number().optional(),
     type: ETransactionType,
   }),

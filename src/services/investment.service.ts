@@ -28,5 +28,14 @@ export async function registerFixedIncomeTransactionService(
       id: params.fromAccountId,
     },
   });
-  return prisma.$transaction([removeFromAccount, fixedInvestment]);
+  const transfer = prisma.transaction.create({
+    data: {
+      name: params.name,
+      description: params.description,
+      amount: params.amount,
+      date: params.date,
+      senderAccountId: params.fromAccountId,
+    },
+  });
+  return prisma.$transaction([removeFromAccount, fixedInvestment, transfer]);
 }

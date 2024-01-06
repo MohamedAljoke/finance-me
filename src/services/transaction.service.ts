@@ -21,6 +21,8 @@ export async function registerTransactionService(
       categoryId: params.categoryId,
       currencyId: params.currencyId,
       accountId: params.fromAccountId,
+      isScheduled: params.isScheduled,
+      scheduleDate: params.scheduleDate,
       type: params.type,
     },
   });
@@ -29,9 +31,17 @@ export async function registerTransactionService(
       id: params.fromAccountId,
     },
     data: {
-      balance: {
-        decrement: params.amount,
-      },
+      ...(params.type === 'INCOME'
+        ? {
+            balance: {
+              increment: params.amount,
+            },
+          }
+        : {
+            balance: {
+              decrement: params.amount,
+            },
+          }),
     },
   });
   const transfer = prisma.transaction.create({
@@ -40,7 +50,11 @@ export async function registerTransactionService(
       description: params.description,
       amount: params.amount,
       date: params.date,
-      senderAccountId: params.fromAccountId,
+      ...(params.type === 'INCOME'
+        ? { receiverAccountId: params.fromAccountId }
+        : {
+            senderAccountId: params.fromAccountId,
+          }),
     },
   });
   return prisma.$transaction([addSpending, subtractAccountBalance, transfer]);

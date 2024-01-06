@@ -139,8 +139,8 @@ model Transaction {
   amount      Float
   date        DateTime
 
-  sender            Account  @relation("SenderAccount", fields: [senderAccountId], references: [id])
-  senderAccountId   String
+  sender            Account? @relation("SenderAccount", fields: [senderAccountId], references: [id])
+  senderAccountId   String?
   receiver          Account? @relation("ReceiverAccount", fields: [receiverAccountId], references: [id])
   receiverAccountId String?
 
