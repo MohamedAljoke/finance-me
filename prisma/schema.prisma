@@ -76,8 +76,8 @@ model IncomeAndSpendingCategories {
   description         String?
   symbol              String?
   incomesAndSpendings IncomesAndSpendings[]
-
-  userId String
+  maxAmountPerMonth   Float?
+  userId              String
 
   user User @relation(fields: [userId], references: [id])
 
@@ -88,23 +88,24 @@ model IncomeAndSpendingCategories {
 }
 
 model IncomesAndSpendings {
-  id           String                      @id @default(uuid())
-  name         String
-  description  String?
-  symbol       String?
-  amount       Float
-  date         DateTime
-  userId       String
-  isScheduled  Boolean                     @default(false)
-  scheduleDate DateTime?
-  user         User                        @relation(fields: [userId], references: [id])
-  categoryId   String
-  category     IncomeAndSpendingCategories @relation(fields: [categoryId], references: [id])
-  accountId    String
-  account      Account                     @relation(fields: [accountId], references: [id])
-  currencyId   String
-  currency     Currency                    @relation(fields: [currencyId], references: [id])
-  type         ETransactionType
+  id                     String                      @id @default(uuid())
+  name                   String
+  description            String?
+  symbol                 String?
+  amount                 Float
+  date                   DateTime
+  userId                 String
+  isScheduled            Boolean                     @default(false)
+  scheduleDate           DateTime?
+  user                   User                        @relation(fields: [userId], references: [id])
+  categoryId             String
+  category               IncomeAndSpendingCategories @relation(fields: [categoryId], references: [id])
+  accountId              String
+  account                Account                     @relation(fields: [accountId], references: [id])
+  currencyId             String
+  currency               Currency                    @relation(fields: [currencyId], references: [id])
+  type                   ETransactionType
+  spendingNecessiteGrade Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

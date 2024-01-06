@@ -11,6 +11,7 @@ export const registerTransactionSchema = object({
     date: string(),
     description: string().optional(),
     symbol: string().optional(),
+    spendingNecessiteGrade: number().optional(),
     type: ETransactionType,
   }),
 });
