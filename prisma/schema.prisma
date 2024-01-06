@@ -15,6 +15,22 @@ enum EUserRoles {
   USER
 }
 
+enum FixedIncomeTypes {
+  CDB
+  CDI
+  IPCA
+  PREFIXADO
+  LCI
+  LCA
+  LC
+  LF
+  CRI
+  CRA
+  Debentures
+  DPGE
+  Outros
+}
+
 enum ETransactionType {
   INCOME
   SPENDING
@@ -51,8 +67,11 @@ model Account {
   senderAccount   Transaction[] @relation(name: "SenderAccount")
   receiverAccount Transaction[] @relation(name: "ReceiverAccount")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                    DateTime                       @default(now())
+  updatedAt                    DateTime                       @updatedAt
+  InvestmentFixedIncome        InvestmentFixedIncome[]
+  InvestmentStocks             InvestmentStocks[]
+  StockAndRealStateTransaction StockAndRealStateTransaction[]
 
   @@map("accounts")
 }
@@ -127,4 +146,64 @@ model Transaction {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("transaction")
+}
+
+model InvestmentFixedIncome {
+  id String @id @default(uuid())
+
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId String
+
+  investmentStartDate DateTime
+  investmentDueDate   DateTime
+
+  incomeTaxPercentage Float
+
+  amount Float
+
+  type FixedIncomeTypes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("investment_fixed_income")
+}
+
+model InvestmentStocks {
+  id String @id @default(uuid())
+
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId String
+
+  investmentStartDate DateTime
+  investmentDueDate   DateTime
+
+  price        Float
+  stocksAmount Float
+
+  type FixedIncomeTypes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("investment_stocks")
+}
+
+model StockAndRealStateTransaction {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  price        Float
+  stocksAmount Float
+  date         DateTime
+
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("stock_and_real_state_transactions")
 }

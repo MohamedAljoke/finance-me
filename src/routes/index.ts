@@ -5,6 +5,7 @@ import accounts from './accounts.routes';
 import currency from './currency.routes';
 import incomeCategories from './categories.routes';
 import transactionRouter from './transactions.routes';
+import investmentRouter from './investments.routes';
 
 const api = Router();
 
@@ -18,5 +19,6 @@ api.use('/accounts', accounts);
 api.use('/currency', currency);
 api.use('/categories', incomeCategories);
 api.use('/payment', transactionRouter);
+api.use('/investment', investmentRouter);
 
 export default api;
