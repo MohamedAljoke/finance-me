@@ -50,8 +50,7 @@ export async function getUserAccountByIdService(
       id: accountId,
     },
     include: {
-      spendings: true,
-      incomes: true,
+      incomesAndSpendings: true,
       senderAccount: true,
       receiverAccount: true,
     },

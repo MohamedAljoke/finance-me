@@ -4,6 +4,7 @@ import auth from './auth.routes';
 import accounts from './accounts.routes';
 import currency from './currency.routes';
 import incomeCategories from './categories.routes';
+import transactionRouter from './transactions.routes';
 
 const api = Router();
 
@@ -16,5 +17,6 @@ api.use('/users', users);
 api.use('/accounts', accounts);
 api.use('/currency', currency);
 api.use('/categories', incomeCategories);
+api.use('/payment', transactionRouter);
 
 export default api;

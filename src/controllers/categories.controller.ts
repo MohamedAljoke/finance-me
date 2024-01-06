@@ -3,7 +3,7 @@ import {
   createIncomeCategoryService,
   fetchUserIncomeCategoriesService,
   getIncomeCategoryByIdAndUserIdService,
-} from '@/services/income-categories-service';
+} from '@/services/categories.service';
 
 import { RegisterIncomeCategoryBody } from '@/validation/income-category.validator';
 

@@ -84,7 +84,7 @@ model IncomeAndSpendingCategories {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("income_category")
+  @@map("income_and_spending_categories")
 }
 
 model IncomesAndSpendings {

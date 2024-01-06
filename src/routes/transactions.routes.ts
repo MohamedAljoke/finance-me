@@ -14,7 +14,7 @@ import { Router } from 'express';
 
 const transactionRouter = Router();
 
-transactionRouter.get(
+transactionRouter.post(
   '/transaction',
   deserializeUser,
   requireUser([EUserRoles.USER]),
@@ -22,7 +22,7 @@ transactionRouter.get(
   registerTransactionController
 );
 
-transactionRouter.get(
+transactionRouter.post(
   '/transfer',
   deserializeUser,
   requireUser([EUserRoles.USER]),
