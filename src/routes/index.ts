@@ -3,8 +3,7 @@ import users from './users.routes';
 import auth from './auth.routes';
 import accounts from './accounts.routes';
 import currency from './currency.routes';
-import spendingCategories from './spending-category.routes';
-import incomeCategories from './income-category.routes';
+import incomeCategories from './categories.routes';
 
 const api = Router();
 
@@ -16,7 +15,6 @@ api.use('/auth', auth);
 api.use('/users', users);
 api.use('/accounts', accounts);
 api.use('/currency', currency);
-api.use('/spending-categories', spendingCategories);
-api.use('/income-categories', incomeCategories);
+api.use('/categories', incomeCategories);
 
 export default api;

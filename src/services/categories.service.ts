@@ -6,7 +6,7 @@ export async function fetchUserIncomeCategoriesService({
 }: {
   userId: string;
 }) {
-  const categories = await prisma.spendingCategory.findMany({
+  const categories = await prisma.incomeAndSpendingCategories.findMany({
     where: {
       userId: userId,
     },
@@ -17,7 +17,7 @@ export async function getIncomeCategoryByIdAndUserIdService(
   accountId: string,
   userId: string
 ) {
-  const account = await prisma.spendingCategory.findFirst({
+  const account = await prisma.incomeAndSpendingCategories.findFirst({
     where: {
       id: accountId,
       userId: userId,
@@ -35,7 +35,7 @@ export async function createIncomeCategoryService({
   userId: string;
   category: RegisterIncomeCategoryBody['body'];
 }) {
-  const createdCategory = await prisma.spendingCategory.create({
+  const createdCategory = await prisma.incomeAndSpendingCategories.create({
     data: {
       name: category.name,
       userId,

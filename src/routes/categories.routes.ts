@@ -4,16 +4,10 @@ import { deserializeUser } from '@/middlewares/deserialize-user';
 import requireUser from '@/middlewares/require-user';
 import { EUserRoles } from '@prisma/client';
 import {
-  createSpendingCategory,
-  getAllSpendingCategoriesController,
-  getSpendingCategoryByIdController,
-} from '@/controllers/spending-category.controller';
-import { registerSpendingCategorySchema } from '@/validation/spending-category.validator';
-import {
   createIncomeCategory,
   fetchAllIncomeCategoriesController,
   getIncomeCategoryByIdController,
-} from '@/controllers/income-category.controller';
+} from '@/controllers/categories.controller';
 import { registerIncomeCategorySchema } from '@/validation/income-category.validator';
 
 const incomeCategories = Router();

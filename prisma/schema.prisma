@@ -15,17 +15,20 @@ enum EUserRoles {
   USER
 }
 
+enum ETransactionType {
+  INCOME
+  SPENDING
+}
+
 model User {
-  id               String             @id @default(uuid())
-  email            String             @unique
-  password         String
-  name             String?
-  role             EUserRoles         @default(USER)
-  accounts         Account[]
-  spendings        Spendings[]
-  incomes          Incomes[]
-  incomeCategory   IncomeCategory[]
-  spendingCategory SpendingCategory[]
+  id                          String                        @id @default(uuid())
+  email                       String                        @unique
+  password                    String
+  name                        String?
+  role                        EUserRoles                    @default(USER)
+  accounts                    Account[]
+  incomesAndSpendings         IncomesAndSpendings[]
+  incomeAndSpendingCategories IncomeAndSpendingCategories[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -34,16 +37,16 @@ model User {
 }
 
 model Account {
-  id            String      @id @default(uuid())
-  name          String
-  description   String?
-  accountNumber String?
-  accountName   String?
-  bankCode      String?
-  userId        String
-  user          User        @relation(fields: [userId], references: [id])
-  spendings     Spendings[]
-  incomes       Incomes[]
+  id                  String                @id @default(uuid())
+  name                String
+  description         String?
+  accountNumber       String?
+  accountName         String?
+  bankCode            String?
+  userId              String
+  balance             Float                 @default(0)
+  user                User                  @relation(fields: [userId], references: [id])
+  incomesAndSpendings IncomesAndSpendings[]
 
   senderAccount   Transaction[] @relation(name: "SenderAccount")
   receiverAccount Transaction[] @relation(name: "ReceiverAccount")
@@ -55,12 +58,11 @@ model Account {
 }
 
 model Currency {
-  id          String      @id @default(uuid())
-  name        String
-  description String?
-  symbol      String?
-  spendings   Spendings[]
-  incomes     Incomes[]
+  id                  String                @id @default(uuid())
+  name                String
+  description         String?
+  symbol              String?
+  incomesAndSpendings IncomesAndSpendings[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -68,29 +70,12 @@ model Currency {
   @@map("currencies")
 }
 
-model SpendingCategory {
-  id          String      @id @default(uuid())
-  name        String
-  description String?
-  symbol      String?
-  spendings   Spendings[]
-
-  userId String
-
-  user User @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("spending_category")
-}
-
-model IncomeCategory {
-  id          String    @id @default(uuid())
-  name        String
-  description String?
-  symbol      String?
-  incomes     Incomes[]
+model IncomeAndSpendingCategories {
+  id                  String                @id @default(uuid())
+  name                String
+  description         String?
+  symbol              String?
+  incomesAndSpendings IncomesAndSpendings[]
 
   userId String
 
@@ -102,52 +87,29 @@ model IncomeCategory {
   @@map("income_category")
 }
 
-model Spendings {
-  id           String           @id @default(uuid())
+model IncomesAndSpendings {
+  id           String                      @id @default(uuid())
   name         String
   description  String?
   symbol       String?
   amount       Float
   date         DateTime
   userId       String
-  isScheduled  Boolean          @default(false)
+  isScheduled  Boolean                     @default(false)
   scheduleDate DateTime?
-  user         User             @relation(fields: [userId], references: [id])
+  user         User                        @relation(fields: [userId], references: [id])
   categoryId   String
-  category     SpendingCategory @relation(fields: [categoryId], references: [id])
+  category     IncomeAndSpendingCategories @relation(fields: [categoryId], references: [id])
   accountId    String
-  account      Account          @relation(fields: [accountId], references: [id])
+  account      Account                     @relation(fields: [accountId], references: [id])
   currencyId   String
-  currency     Currency         @relation(fields: [currencyId], references: [id])
+  currency     Currency                    @relation(fields: [currencyId], references: [id])
+  type         ETransactionType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("spendings")
-}
-
-model Incomes {
-  id           String         @id @default(uuid())
-  name         String
-  description  String?
-  symbol       String?
-  amount       Float
-  date         DateTime
-  userId       String
-  isScheduled  Boolean        @default(false)
-  scheduleDate DateTime?
-  user         User           @relation(fields: [userId], references: [id])
-  categoryId   String
-  category     IncomeCategory @relation(fields: [categoryId], references: [id])
-  accountId    String
-  account      Account        @relation(fields: [accountId], references: [id])
-  currencyId   String
-  currency     Currency       @relation(fields: [currencyId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("income")
+  @@map("income_and_spending")
 }
 
 model Transaction {
@@ -157,10 +119,10 @@ model Transaction {
   amount      Float
   date        DateTime
 
-  sender            Account @relation("SenderAccount", fields: [senderAccountId], references: [id])
+  sender            Account  @relation("SenderAccount", fields: [senderAccountId], references: [id])
   senderAccountId   String
-  receiver          Account @relation("ReceiverAccount", fields: [receiverAccountId], references: [id])
-  receiverAccountId String
+  receiver          Account? @relation("ReceiverAccount", fields: [receiverAccountId], references: [id])
+  receiverAccountId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
