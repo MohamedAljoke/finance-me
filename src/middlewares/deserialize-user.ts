@@ -1,4 +1,4 @@
-import { verifyToken } from '@utils/jwt.utils';
+import { generateToken, verifyToken } from '@utils/jwt.utils';
 import { validatedEnv } from '@validation/env.validator';
 import { Request, Response, NextFunction } from 'express';
 
@@ -25,6 +25,19 @@ export const deserializeUser = async (
   }
   // TODO: deal with refresh token
   if (expired && refreshToken) {
+    const { decodedRefresh, expiredRefresh } = verifyToken(
+      refreshToken,
+      validatedEnv.JWT_ACCESS_TOKEN_HASH_KEY
+    );
+    if (expiredRefresh) {
+      next();
+    }
+    const newAccessToken = generateToken(decoded);
+    const newRefreshToken = generateToken(decoded);
+    res.cookie('access_token', newAccessToken, { httpOnly: true });
+    res.cookie('refresh_token', newRefreshToken, { httpOnly: true });
+    res.locals.user = decoded;
+    return next();
   }
   next();
 };
